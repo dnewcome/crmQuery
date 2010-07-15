@@ -6,7 +6,10 @@ namespace Djn.Crm
 {
 	/**
 	* CrmQuery is an experimental domain-specific language for building
-	* Microsoft CRM QueryExpressions.
+	*	Microsoft CRM QueryExpressions.
+	* 
+	* this software is provided under the MIT license. See file LICENSE
+	*	for details.
 	*/
 	public class CrmQuery
 	{
