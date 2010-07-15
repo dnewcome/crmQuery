@@ -1,5 +1,5 @@
 # About
-crmQuery is a tiny domain-specific language for building queries against Microsoft Dynamics CRM. The structure is inspired by method-chaining libraries like jQuery and the syntax is inspired by plain SQL. crmQuery wraps the QueryExpression interface and supporting classes, aiming to making queries easier to read and write.
+crmQuery is a tiny domain-specific language for building queries against Microsoft Dynamics CRM. The structure is inspired by method-chaining libraries like jQuery and the syntax is inspired by plain SQL. crmQuery wraps the QueryExpression interface and supporting classes, aiming to make queries easier to read and write.
 
 #Synopsis
 
