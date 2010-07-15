@@ -19,8 +19,27 @@ The corresponding Sql query would look like this:
     inner join myentity e2
     on e1.parentid = e2.myentityid
     where e1.name = 'hello'
-    
+
 Notice that the projection clause is assumed to be *, or in CRM parlance, AllColumns. Passing an instance of AllColumns to Select() will use the instance as the relational projection list.
+
+In order to do the same thing using the raw CRM API you need quite a bit of code:
+
+    LinkEntity linkEntity = new LinkEntity();
+			
+    linkEntity.LinkFromEntityName = "myentity";
+    linkEntity.LinkFromAttributeName = "parentid";
+    linkEntity.LinkToEntityName = "myentity";
+    linkEntity.LinkToAttributeName = "myentityid";
+    linkEntity.JoinOperator = JoinOperator.Inner;
+
+    QueryExpression query = new QueryExpression( "myentity" );
+    query.LinkEntities.Add( linkEntity );
+    query.ColumnSet = new AllColumns();
+    			
+    linkEntity.LinkCriteria.FilterOperator = LogicalOperator.And;
+    linkEntity.LinkCriteria.AddCondition( "name", ConditionOperator.Equal, "hello" );
+    
+The preceding code could be written using some convenience constructors but the structure of the query is still not apparent without looking closely at the code. Multiple criteria exacerbate the problem greatly.
 
 #Status
 crmQuery is experimental software and should not be used in any production scenarios. If it proves useful further development work may be done, but the present code should be considered to be simply a proof-of-concept.
