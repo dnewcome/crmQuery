@@ -66,9 +66,17 @@ namespace Djn.Crm
 			linkEntity.LinkToAttributeName = in_toField;
 			linkEntity.JoinOperator = JoinOperator.Inner;
 			
-			// TODO: we only support joins against the entity defined in the
-			// root query - should write support for nested LinkEntities
-			m_query.LinkEntities.Add( linkEntity );
+			// TODO: We look at the root query first. Double-think is this the right thing?
+			if( m_query.EntityName == in_fromEntity ) {
+				m_query.LinkEntities.Add( linkEntity );
+			}
+			else {
+				LinkEntity link = FindEntityLink( m_query.LinkEntities, in_fromEntity );
+				if( link != null ) {
+					link.LinkEntities.Add( linkEntity );
+				}
+			}
+			
 			m_lastAddedLink = linkEntity;
 			return this;
 		}
@@ -84,6 +92,7 @@ namespace Djn.Crm
 
 			filterExpression.Conditions.Add( ce );
 
+			// TODO: this logic is repeated in Join()
 			if( m_lastAddedLink != null ) {
 				m_lastAddedLink.LinkCriteria.AddFilter( filterExpression );
 			}
