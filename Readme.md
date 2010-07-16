@@ -1,11 +1,11 @@
 # About
-crmQuery is a tiny domain-specific language for building queries against Microsoft Dynamics CRM. The structure is inspired by method-chaining libraries like jQuery and the syntax is inspired by plain SQL. crmQuery wraps the QueryExpression interface and supporting classes, aiming to making queries easier to read and write.
+crmQuery is a tiny domain-specific language for building queries against Microsoft Dynamics CRM. The structure is inspired by method-chaining libraries like jQuery and the syntax is inspired by plain SQL. crmQuery wraps the QueryExpression interface and supporting classes, aiming to make queries easier to read and write.
 
 #Synopsis
 
 The following idiomatic example query traverses a parent-child tree relationships among instances of the same entity. In Sql this would be a self-join. In CRM it would be a LinkEntity that references the same entity type on either end. In this query we get all of the child nodes of the entity whose name is "hello":
 
-    QueryBase query = QueryDsl
+    QueryBase query = CrmQuery
         .Select()
         .From( "myentity" )
         .Join( "myentity", "parentid", "myentity", "myentityid" )
