@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrmQuery", "CrmQuery.csproj", "{D6354AB3-36AB-480A-830B-834064FC02BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrmQuery", "CrmQuery\CrmQuery.csproj", "{D6354AB3-36AB-480A-830B-834064FC02BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrmQueryTests", "..\CrmQueryTests\CrmQueryTests.csproj", "{244112AB-3436-489D-8E53-9823956004E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrmQueryTests", "CrmQueryTests\CrmQueryTests.csproj", "{244112AB-3436-489D-8E53-9823956004E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
