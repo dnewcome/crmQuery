@@ -45,7 +45,7 @@ The preceding code could be written using some convenience constructors but the 
 crmQuery is experimental software and should not be used in any production scenarios. If it proves useful further development work may be done, but the present code should be considered to be simply a proof-of-concept.
 
 #Limitations
-crmQuery only works (and and is tested) on relatively simple queries. Joins can be performed only against the root of the query, not against another join. There is a slight impedance mismatch between a function-chaining interface and a set-based language like Sql. Subsequently, the order in which expressions are added can be important. crmQuery tries to do the right thing by considering the last-added filter and also by walking up the tree of filters in order to find the correct filter to add a criteria to. This logic is crude and may not allow expression of some complex queries.
+crmQuery only works (and and is tested) on relatively simple queries. There is a slight impedance mismatch between a function-chaining interface and a set-based language like Sql. Subsequently, the order in which expressions are added can be important. crmQuery tries to do the right thing by considering the last-added filter and also by walking up the tree of filters in order to find the correct filter to add a criteria to. This logic is crude and may not allow expression of some complex queries.
 
 #License
 crmQuery is provided under the MIT software license. See the file LICENSE for the full text.
