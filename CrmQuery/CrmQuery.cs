@@ -2,7 +2,7 @@
 using System.Collections;
 using Microsoft.Crm.Sdk.Query;
 
-namespace Djn.Crm
+namespace Djn.Crm.Events
 {
 	/**
 	* CrmQuery is an experimental domain-specific language for building
@@ -10,6 +10,10 @@ namespace Djn.Crm
 	* 
 	* this software is provided under the MIT license. See file LICENSE
 	*	for details.
+	*	
+	* This is an experimental version of CRMQuery that is included in 
+	* the event registration portal. TODO: merge useful changes back to
+	* mainline on GitHub.
 	*/
 	public class CrmQuery
 	{
@@ -22,7 +26,7 @@ namespace Djn.Crm
 		 */
 		public QueryExpression Query {
 			get { return m_query; }
-		} 
+		}
 		private QueryExpression m_query;
 
 		/**
@@ -53,35 +57,40 @@ namespace Djn.Crm
 			m_query.EntityName = in_entityName;
 			return this;
 		}
-		
+
 		/**
 		 * Join uses LinkEntity to establish a relation between two entities.
 		 * Use Where to add criteria using the 'to' entity.
 		 */
-		public CrmQuery Join( string in_fromEntity, string in_fromField, string in_toEntity, string in_toField ) {
+		public static LinkEntity JoinExpression( string in_fromEntity, string in_fromField, string in_toEntity, string in_toField ) {
 			LinkEntity linkEntity = new LinkEntity();
 			linkEntity.LinkFromEntityName = in_fromEntity;
 			linkEntity.LinkFromAttributeName = in_fromField;
 			linkEntity.LinkToEntityName = in_toEntity;
 			linkEntity.LinkToAttributeName = in_toField;
 			linkEntity.JoinOperator = JoinOperator.Inner;
-			
+			return linkEntity;
+		}
+		public CrmQuery Join( string in_fromEntity, string in_fromField, string in_toEntity, string in_toField ) {
+			LinkEntity linkEntity = JoinExpression( in_fromEntity, in_fromField, in_toEntity, in_toField ) ;
+			return Join( in_fromEntity, linkEntity );
+		}
+		public CrmQuery Join( string in_fromEntity, LinkEntity in_linkEntity ) {
 			// TODO: We look at the root query first. Double-think is this the right thing?
 			if( m_query.EntityName == in_fromEntity ) {
-				m_query.LinkEntities.Add( linkEntity );
+				m_query.LinkEntities.Add( in_linkEntity );
 			}
 			else {
 				LinkEntity link = FindEntityLink( m_query.LinkEntities, in_fromEntity );
 				if( link != null ) {
-					link.LinkEntities.Add( linkEntity );
+					link.LinkEntities.Add( in_linkEntity );
 				}
 			}
-			
-			m_lastAddedLink = linkEntity;
+			m_lastAddedLink = in_linkEntity;
 			return this;
 		}
 
-		public CrmQuery Where( string in_entity, string in_field, ConditionOperator in_operator, object[] in_values ) {
+		public static FilterExpression WhereExpression( string in_field, ConditionOperator in_operator, object[] in_values ) {
 			FilterExpression filterExpression = new FilterExpression();
 			filterExpression.FilterOperator = LogicalOperator.And;
 
@@ -91,18 +100,24 @@ namespace Djn.Crm
 			ce.Values = in_values;
 
 			filterExpression.Conditions.Add( ce );
-
+			return filterExpression;
+		}
+		public CrmQuery Where( string in_entity, string in_field, ConditionOperator in_operator, object[] in_values ) {
+			FilterExpression filterExpression = CrmQuery.WhereExpression( in_field, in_operator, in_values );
+			return Where( in_entity, filterExpression );
+		}
+		public CrmQuery Where( string in_entity, FilterExpression in_filterExpression ) {
 			// TODO: this logic is repeated in Join()
 			if( m_lastAddedLink != null ) {
-				m_lastAddedLink.LinkCriteria.AddFilter( filterExpression );
+				m_lastAddedLink.LinkCriteria.AddFilter( in_filterExpression );
 			}
 			else if( m_query.EntityName == in_entity ) {
-				m_query.Criteria.AddFilter( filterExpression );
+				m_query.Criteria.AddFilter( in_filterExpression );
 			}
 			else {
 				LinkEntity link = FindEntityLink( m_query.LinkEntities, in_entity );
 				if( link != null ) {
-					link.LinkCriteria.AddFilter( filterExpression );
+					link.LinkCriteria.AddFilter( in_filterExpression );
 				}
 			}
 			return this;
