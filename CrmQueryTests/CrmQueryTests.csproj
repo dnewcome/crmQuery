@@ -35,16 +35,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Fest">
-      <HintPath>..\..\..\assemblycache\Fest\0.2.0.0\3.5\Release\Fest.dll</HintPath>
+      <HintPath>..\lib\Fest.dll</HintPath>
     </Reference>
     <Reference Include="microsoft.crm.sdk">
-      <HintPath>..\..\..\..\sandbox\mbs\assemblycache\Microsoft.Crm.Sdk\4.0.12\64bit\microsoft.crm.sdk.dll</HintPath>
+      <HintPath>..\lib\microsoft.crm.sdk.dll</HintPath>
     </Reference>
-    <Reference Include="microsoft.crm.sdktypeproxy">
-      <HintPath>..\..\..\..\sandbox\mbs\assemblycache\Microsoft.Crm.Sdk\4.0.12\64bit\microsoft.crm.sdktypeproxy.dll</HintPath>
+ 
+    <Reference Include="Microsoft.Xrm.Sdk">
+      <HintPath>..\lib\Microsoft.Xrm.Sdk.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,7 +57,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CrmQueryTests.cs" />
+    <Compile Include="CrmQuery5Tests.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>

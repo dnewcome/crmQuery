@@ -1,0 +1,3 @@
+[submodule "fest"]
+	path = fest
+	url = git://github.com/dnewcome/fest.git

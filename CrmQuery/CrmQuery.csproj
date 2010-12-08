@@ -31,14 +31,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="microsoft.crm.sdk">
-      <HintPath>..\..\..\..\sandbox\mbs\assemblycache\Microsoft.Crm.Sdk\4.0.12\64bit\microsoft.crm.sdk.dll</HintPath>
+    <Reference Include="microsoft.crm.sdk, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\microsoft.crm.sdk.dll</HintPath>
     </Reference>
-    <Reference Include="microsoft.crm.sdktypeproxy">
-      <HintPath>..\..\..\..\sandbox\mbs\assemblycache\Microsoft.Crm.Sdk\4.0.12\64bit\microsoft.crm.sdktypeproxy.dll</HintPath>
+    <Reference Include="Microsoft.Xrm.Sdk">
+      <HintPath>..\lib\Microsoft.Xrm.Sdk.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,7 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CrmQuery.cs" />
+    <Compile Include="CrmQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CrmQuery5.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
