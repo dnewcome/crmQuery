@@ -85,5 +85,24 @@ namespace Djn.Crm.Test
 			Fest.AssertTrue( le2.LinkFromEntityName == le1.LinkToEntityName, "LinkEntity added in incorrect position" );
 			Fest.AssertTrue( ce.AttributeName == "myproperty", "ConditionExpression added in incorrect position" );
 		}
-	}
-}
+
+		[FestTest]
+		public void TestOrOperator() {
+
+			QueryExpression query = Djn.Crm5.CrmQuery
+				.Select( new ColumnSet( true ) )
+				.From( "altai_dynamicformfield" )
+				.Where( "altai_dynamicformfield", "altai_name",
+					ConditionOperator.Equal, new string[] { "address1" } )
+				.Or( "altai_name",
+					ConditionOperator.Equal, new string[] { "address2" } ).Query;
+
+			Fest.AssertTrue( query.EntityName == "altai_dynamicformfield", "Entity name not set" );
+			// 'live' CRM test removed
+			// IOrganizationService service = Altai.MSCrm.CRM5ServiceUtil.GetCrmService();
+			// EntityCollection ent = Altai.MSCrm.DynamicEntityHelper5.GetDynamicEntityCollection( service, query );
+			// Fest.AssertTrue( ent.Entities.Count == 2, "expected 2 entities" );
+		}
+
+	} // class
+} // namespace

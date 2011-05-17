@@ -35,6 +35,12 @@ namespace Djn.Crm5
 		private LinkEntity m_lastAddedLink;
 
 		/**
+		 * current expression is set when using Where() and used with
+		 * Or() to enable adding new condition to the filter.
+		 */
+		private FilterExpression m_currentExpression;
+		 
+		/**
 		 * Select serves as the constructor and the start of the 
 		 * chain. By Sql convention, accepts the projection list
 		 */
@@ -124,6 +130,23 @@ namespace Djn.Crm5
 			return this;
 		}
 
+		public CrmQuery Or( string in_field, ConditionOperator in_operator, object[] in_values ) {
+			if( m_currentExpression != null ) {
+				ConditionExpression ce = new ConditionExpression();
+				ce.AttributeName = in_field;
+				ce.Operator = in_operator;
+				foreach( object item in in_values ) {
+					ce.Values.Add( item );
+				}
+				m_currentExpression.AddCondition( ce );
+				m_currentExpression.FilterOperator = LogicalOperator.Or;
+			}
+			else {
+				throw new InvalidStateException( "Unable to add 'Or' condition: current filter expression is null" );
+			}
+			return this;
+		}
+
 		/**
 		 * Used by Where to figure out which LinkEntity corresponds to the desired
 		 * entity we wish to attach the criteria to
@@ -153,5 +176,9 @@ namespace Djn.Crm5
 			return this;
 		}
 
-	} // class 
+	} // class
+	class InvalidStateException : Exception {
+		public InvalidStateException( string message ) : base( message ) {
+		}
+	}
 } // namespace

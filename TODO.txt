@@ -1,0 +1,10 @@
+Crmquery can be simplified by assuming that criteria will be added in order.
+
+Currently we rely on the entity name being passed in as the first argument to 
+Where(), if we assume that we are always operating on the last given link
+we never have to pass anything. This simplifies things both in impementation
+and in usage.
+
+Note that we have been adding criteria in a slightly incorrect way, which worked
+for logical 'And' but won't work for 'Or'.
+
