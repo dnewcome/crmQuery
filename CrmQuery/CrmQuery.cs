@@ -29,7 +29,7 @@ namespace Djn.Crm5
 		private CrmQuery() { }
 
 		/**
-		 * CrmQuery wraps a CRM QueryExpression. Idomatic usage chains calls 
+		 * CrmQuery wraps a CRM QueryExpression. Idiomatic usage chains calls 
 		 * together, only accessing the Query as the last call in the chain.
 		 */
 		public QueryExpression Query {
@@ -64,6 +64,11 @@ namespace Djn.Crm5
 			dsl.m_query = query;
 			return dsl;
 		}
+
+		/**
+		 * Usage of the default constructor causes all columns to be
+		 * returned - avoid this if possible for performance reasons.
+		 */
 		public static CrmQuery Select() {
 #if CRM4
 			return Select( new AllColumns() );
@@ -72,6 +77,10 @@ namespace Djn.Crm5
 #endif
 		}
 
+		/**
+		 * New in 1.6 - convenience constructor for specifying projection
+		 * with variable list of string arguments.
+		 */
 		public static CrmQuery Select( params string[] in_fields ) {
 			return Select( new ColumnSet( in_fields ) );
 		}
@@ -140,7 +149,7 @@ namespace Djn.Crm5
 		public CrmQuery Where( string in_entity, FilterExpression in_filterExpression ) {
 			m_currentExpression = in_filterExpression;
 
-			// TODO: this logic is repeated in Join()
+			// TODO: this logic is similar to what is in Join()
 			if( m_lastAddedLink != null ) {
 				m_lastAddedLink.LinkCriteria.AddFilter( in_filterExpression );
 			}

@@ -8,3 +8,20 @@ and in usage.
 Note that we have been adding criteria in a slightly incorrect way, which worked
 for logical 'And' but won't work for 'Or'.
 
+- refactoring:
+
+add CreateConditionExpression() method to abstract creating condition expressions
+in Or() and WhereExpression(). This will remove one set of #if directives and
+clean up conditional compilation. 
+
+add SetValues() to abstract differences in the Values property between crm4 and 5.
+this may not be so bad once we have something like CreateConditionExpression()
+so maybe it is a lower priority.
+
+decision tree of finding the last added link is repeated in Join() and Where().
+
+do we need to return different levels of the query expression rather than be 
+stateful? Stateful operation requires us to do things in order, and makes it 
+difficult to do something like add 2 joins on the same entity. We pass the 
+entity name each time to enable this, which is cumbersome in the syntax. Might
+be better to have methods that signal the end of an expression.
