@@ -1,18 +1,27 @@
 ﻿using System;
 using System.Collections;
+#if CRM4
+using Microsoft.Crm.Sdk.Query;
+#else
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
+#endif
 
+#if CRM4
+namespace Djn.Crm
+#else
 namespace Djn.Crm5
+#endif
 {
 	/**
-	* CrmQuery is an experimental domain-specific language for building
+	* CrmQuery is a small domain-specific language for building
 	*	Microsoft CRM QueryExpressions.
 	* 
 	* this software is provided under the MIT license. See file LICENSE
 	*	for details.
 	*	
-	* This version of CrmQuery targets the CRM 2011/5.0 product.
+	* Define CRM4 to compile CrmQuery targeting the CRM4, otherwise
+	* targets CRM 2011.
 	*/
 	public class CrmQuery
 	{
@@ -44,7 +53,11 @@ namespace Djn.Crm5
 		 * Select serves as the constructor and the start of the 
 		 * chain. By Sql convention, accepts the projection list
 		 */
+#if CRM4
+		public static CrmQuery Select( ColumnSetBase in_columns ) {
+#else
 		public static CrmQuery Select( ColumnSet in_columns ) {
+#endif
 			QueryExpression query = new QueryExpression();
 			query.ColumnSet = in_columns;
 			CrmQuery dsl = new CrmQuery();
@@ -52,7 +65,11 @@ namespace Djn.Crm5
 			return dsl;
 		}
 		public static CrmQuery Select() {
+#if CRM4
+			return Select( new AllColumns() );
+#else
 			return Select( new ColumnSet(true ) );
+#endif
 		}
 
 		public static CrmQuery Select( params string[] in_fields ) {
@@ -106,10 +123,13 @@ namespace Djn.Crm5
 			ConditionExpression ce = new ConditionExpression();
 			ce.AttributeName = in_field;
 			ce.Operator = in_operator;
+#if CRM4
+			ce.Values = in_values;
+#else
             foreach (object item in in_values) {
                 ce.Values.Add(item);
             }
-
+#endif
 			filterExpression.Conditions.Add( ce );
 			return filterExpression;
 		}
@@ -143,10 +163,13 @@ namespace Djn.Crm5
 				ConditionExpression ce = new ConditionExpression();
 				ce.AttributeName = in_field;
 				ce.Operator = in_operator;
+#if CRM4
+				ce.Values = in_values;
+#else
 				foreach( object item in in_values ) {
 					ce.Values.Add( item );
 				}
-				
+#endif			
 				m_currentExpression.AddCondition( ce );
 				m_currentExpression.FilterOperator = LogicalOperator.Or;
 			}
@@ -160,7 +183,11 @@ namespace Djn.Crm5
 		 * Used by Where to figure out which LinkEntity corresponds to the desired
 		 * entity we wish to attach the criteria to
 		 */
+#if CRM4
+		private LinkEntity FindEntityLink( ArrayList in_linkEntities, string in_entityName ) {
+#else
 		private LinkEntity FindEntityLink( DataCollection<LinkEntity> in_linkEntities, string in_entityName ) {
+#endif
 			foreach( LinkEntity link in in_linkEntities ) {
 				FindEntityLink( link.LinkEntities, in_entityName );
 				if( link.LinkToEntityName == in_entityName ) {
