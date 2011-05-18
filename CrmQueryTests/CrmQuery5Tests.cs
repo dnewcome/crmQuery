@@ -104,5 +104,22 @@ namespace Djn.Crm.Test
 			// Fest.AssertTrue( ent.Entities.Count == 2, "expected 2 entities" );
 		}
 
+
+		[FestTest]
+		/**
+		 * Test new constructor that takes variable number of string arguments
+		 * and creates a ColumnSet behind the scenes.
+		 */
+		public void TestStringColumns() {
+
+			QueryExpression query = Djn.Crm5.CrmQuery
+				.Select( "altai_dynamicformfieldid", "altai_name" )
+				.From( "altai_dynamicformfield" )
+				.Where( "altai_dynamicformfield", "altai_name",
+					ConditionOperator.Equal, new string[] { "address1" } ).Query;
+
+			Fest.AssertTrue( query.ColumnSet.Columns.Contains( "altai_name" ), "ColumnSet does not contain altai_name" );
+			Fest.AssertTrue( query.ColumnSet.Columns.Contains( "altai_dynamicformfieldid" ), "ColumnSet does not contain altai_dynamicformfieldid" );
+		}
 	} // class
 } // namespace

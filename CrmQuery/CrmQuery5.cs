@@ -55,6 +55,10 @@ namespace Djn.Crm5
 			return Select( new ColumnSet(true ) );
 		}
 
+		public static CrmQuery Select( params string[] in_fields ) {
+			return Select( new ColumnSet( in_fields ) );
+		}
+
 		/**
 		 * From sets the entity type that the query will return
 		 */
@@ -114,6 +118,8 @@ namespace Djn.Crm5
 			return Where( in_entity, filterExpression );
 		}
 		public CrmQuery Where( string in_entity, FilterExpression in_filterExpression ) {
+			m_currentExpression = in_filterExpression;
+
 			// TODO: this logic is repeated in Join()
 			if( m_lastAddedLink != null ) {
 				m_lastAddedLink.LinkCriteria.AddFilter( in_filterExpression );
@@ -132,12 +138,15 @@ namespace Djn.Crm5
 
 		public CrmQuery Or( string in_field, ConditionOperator in_operator, object[] in_values ) {
 			if( m_currentExpression != null ) {
+
+				// TODO this logic is repeated in WhereExpression()
 				ConditionExpression ce = new ConditionExpression();
 				ce.AttributeName = in_field;
 				ce.Operator = in_operator;
 				foreach( object item in in_values ) {
 					ce.Values.Add( item );
 				}
+				
 				m_currentExpression.AddCondition( ce );
 				m_currentExpression.FilterOperator = LogicalOperator.Or;
 			}
