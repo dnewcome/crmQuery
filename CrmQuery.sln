@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrmQuery", "CrmQuery\CrmQue
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrmQueryTests", "CrmQueryTests\CrmQueryTests.csproj", "{244112AB-3436-489D-8E53-9823956004E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrmQuery2011", "CrmQuery\CrmQuery2011.csproj", "{033FE1EC-4C59-4BB1-944C-1579D374EC8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{244112AB-3436-489D-8E53-9823956004E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{244112AB-3436-489D-8E53-9823956004E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{244112AB-3436-489D-8E53-9823956004E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{033FE1EC-4C59-4BB1-944C-1579D374EC8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{033FE1EC-4C59-4BB1-944C-1579D374EC8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{033FE1EC-4C59-4BB1-944C-1579D374EC8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{033FE1EC-4C59-4BB1-944C-1579D374EC8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
